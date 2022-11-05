@@ -1,0 +1,26 @@
+cloudkarafka:
+    topic: ${CLOUDKARAFKA_USERNAME}-default
+spring:
+    kafka:
+        bootstrap-servers: ${CLOUDKARAFKA_BROKERS}
+        consumer:
+            auto-offset-reset: latest
+            group-id: ${CLOUDKARAFKA_USERNAME}-consumers
+            properties:
+                spring:
+                    json:
+                        trusted:
+                            packages: sample.kafka
+            value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        producer:
+            properties:
+                enable:
+                    idempotence: false
+            value-serializer: org.apache.kafka.common.serialization.StringSerializer
+        properties:
+            sasl:
+                jaas:
+                    config: org.apache.kafka.common.security.scram.ScramLoginModule required username="${CLOUDKARAFKA_USERNAME}" password="${CLOUDKARAFKA_PASSWORD}";
+                mechanism: SCRAM-SHA-256
+            security:
+                protocol: SASL_SSL
