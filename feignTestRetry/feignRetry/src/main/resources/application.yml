@@ -14,3 +14,5 @@ feign:
         loggerLevel: BASIC
         errorDecoder: com.upmasters.feignTestRetry.feignClients.errors.DrmClientErrorDecoder
         retryer: com.upmasters.feignTestRetry.config.FeignRetry
+      example:
+        errorDecoder: com.upmasters.feignTestRetry.feignClients.errors.ClientErrorDecoder
