@@ -2,6 +2,7 @@ package com.upmasters.feignTestRetry.config;
 
 import feign.RetryableException;
 import feign.Retryer;
+import feign.codec.ErrorDecoder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class FeignRetry implements feign.Retryer {
 
+  private final ErrorDecoder defaultErrorDecoder = new ErrorDecoder.Default();
   private final int maxAttempts;
   private final long backoff;
   int attemp;
@@ -38,7 +40,8 @@ public class FeignRetry implements feign.Retryer {
     try{
       TimeUnit.MILLISECONDS.sleep(backoff);
     }catch (InterruptedException ex){
-      log.info(ex.getMessage());
+      log.error(ex.getMessage());
+      Thread.currentThread().interrupt();
     }
 
   }

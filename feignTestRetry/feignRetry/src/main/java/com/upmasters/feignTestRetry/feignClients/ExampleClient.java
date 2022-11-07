@@ -1,18 +1,19 @@
 package com.upmasters.feignTestRetry.feignClients;
 
-import com.upmasters.feignTestRetry.feignClients.Dtos.CredenciaisDTO;
-import com.upmasters.feignTestRetry.feignClients.Dtos.TokenDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @Component
-@FeignClient(name = "usuario-client", url = "http://localhost:8082/")
+@FeignClient(name = "example", url = "http://localhost:9082/")
 public interface ExampleClient {
 
-  @PostMapping("/examples")
+  @PostMapping("/users")
   ResponseEntity<Void> example();
+
+  @PutMapping("/users")
+  ResponseEntity<Void> example400();
 
 }
